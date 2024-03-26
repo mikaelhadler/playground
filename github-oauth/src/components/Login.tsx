@@ -1,8 +1,43 @@
+import { useEffect } from "react";
 import { Button } from "./ui/button";
 import { Icons } from "./ui/icons";
 import { Input } from "./ui/input";
 
+
+
 const Login = () => {
+    useEffect(() => {
+        if(window.location.href.includes("code")) {
+            const code = new URLSearchParams(window.location.search).get("code");
+            if (code) {
+                fetch("https://github.com/login/oauth/access_token", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
+                        client_secret: import.meta.env.VITE_GITHUB_CLIENT_SECRET,
+                        code: code,
+                        redirect_uri: window.location.origin,
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const accessToken = data.access_token;
+                        // Use the access token as needed
+                        console.log("Access Token:", accessToken);
+                    })
+                    .catch((error) => {
+                        console.error("Error retrieving access token:", error);
+                    });
+            }
+            
+            console.log("Code:", code);
+        }
+    }, [window.location.href]);
+
     const handleGithubOauth = () => {
         window.location.href = `https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_GITHUB_CLIENT_ID}`;
     }
