@@ -39,7 +39,10 @@ const Login = () => {
     }, [window.location.href]);
 
     const handleGithubOauth = () => {
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_GITHUB_CLIENT_ID}`;
+        console.log('import.meta.env.VITE_GITHUB_CLIENT_ID', import.meta.env.VITE_GITHUB_CLIENT_ID);
+        console.log('import.meta.env.VITE_GITHUB_CLIENT_SECRET', import.meta.env.VITE_GITHUB_CLIENT_SECRET);
+        
+        // window.location.href = `https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_GITHUB_CLIENT_ID}`;
     }
   return (
     <div className="flex flex-col gap-3 w-[350px] mx-auto">
